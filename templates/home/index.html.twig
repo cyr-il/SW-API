@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Welcome to the Star Wars API{% endblock %}
+
+{% block body %}
+
+<div class="col-md-6 mx-auto mt-4">
+    <h1 style="color:white">Welcome to the Star Wars API</h1>
+    <form>
+    <div class="mb-3">
+        <label for="inputNumber" class="form-label">Entre un nombre</label>
+        <input type="number" class="form-control" id="numero" name ="numero" aria-describedby="Help">
+        <div id="emailHelp" class="form-text" style="color:white"><i>Entrez un nombre au hasard entre 1 et 82</i></div>
+    </div>
+    <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+</div>
+<h2 style="color:white" class="col-md-6 mx-auto mt-4">{{people.name}}</h2>
+
+<div class="card mx-auto" style="width: 18rem;">
+  <img src="{{people.picture}}" class="card-img-top" alt="{{people.name}}">
+  <div class="card-body">
+    <h5 class="card-title">{{people.name}}</h5>
+    <p class="card-text">Mon nom est {{people.name}} et vous pouvez me voir dans 
+        {% if (people.movies | length > 1) %} 
+          les films suivants :
+        {% else %}
+          le film suivant :
+        {% endif %} 
+        {% for movie in people.movies %}
+          <ul>
+            <li>{{movie}}</li>
+          </ul>
+        {% endfor %}</p>
+  </div>
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item">Je mesure {{people.height}} cm pour un poids de {{people.mass}} kgs</li>
+    <li class="list-group-item">Ma planète est {{people.homeworld}}</li>
+    <li class="list-group-item"> {% if people.getHair_color starts with "n/a" %}
+          Je n'ai pas de cheveux.
+        {% else %}
+          Mes cheveux sont {{people.getHair_color}}
+        {% endif %}
+        {% if people.skin_color == "n/a" %}
+          Ma peau n'a pas de couleur.
+        {% else %}
+          Ma peau est {{people.skin_color}}.
+        {% endif %}
+        J'ai de beaux yeux {{people.eye_color}}.
+        Je suis né l'année {{people.birth_year}} et comme vous devez le savoir 
+        {% if people.gender == "n/a" %}
+          Je n'ai pas de sexe.
+        {% else %}
+          Je suis un {{people.gender}}.
+        {% endif %}</li>
+  </ul>
+</div>
+{% endblock %}
